@@ -1,0 +1,25 @@
+@model IEnumerable<ThAmCo.Customers.Models.Order>
+
+<div class="container">
+    <h2>Order History</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>Product</th>
+                <th>Order Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in Model)
+            {
+                <tr>
+                    <td>@order.Id</td>
+                    <td>@order.Product?.Name</td>
+                    <td>@order.OrderDate.ToShortDateString()</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <a href="/Customers/Profile" class="btn btn-secondary">Back to Profile</a>
+</div>

@@ -1,0 +1,40 @@
+@model dynamic
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h2>Staff Profile</h2>
+                </div>
+                <div class="card-body">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <div class="row">
+                            <div class="col-md-4">
+                                @if (!string.IsNullOrEmpty(Model.ProfileImage))
+                                {
+                                    <img src="@Model.ProfileImage" alt="Profile" class="img-fluid rounded-circle mb-3" />
+                                }
+                            </div>
+                            <div class="col-md-8">
+                                <h4>Welcome @Model.Name!</h4>
+                                <p>Email: @Model.EmailAddress</p>
+                                <ul class="list-group mb-3">
+                                    <li class="list-group-item">
+                                        <a asp-controller="Staffs" asp-action="Customers">Manage Customers</a>
+                                    </li>
+                                </ul>
+                                <a asp-controller="StaffAccount" asp-action="Logout" class="btn btn-danger">Logout</a>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <p>Please <a asp-controller="StaffAccount" asp-action="Login">log in</a> to view your profile.</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

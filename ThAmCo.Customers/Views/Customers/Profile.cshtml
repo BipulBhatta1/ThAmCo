@@ -1,0 +1,48 @@
+@model ThAmCo.Customers.DTOs.CustomerDto
+
+<div class="container">
+    <h2>Profile</h2>
+    <div>
+        <strong>Name:</strong> @Model.Name
+    </div>
+    <div>
+        <strong>Email:</strong> @Model.Email
+    </div>
+    <h4>Address</h4>
+    <div>
+        <strong>Street:</strong> @Model.Address?.Street
+    </div>
+    <div>
+        <strong>City:</strong> @Model.Address?.City
+    </div>
+    <div>
+        <strong>State:</strong> @Model.Address?.State
+    </div>
+    <div>
+        <strong>Postal Code:</strong> @Model.Address?.PostalCode
+    </div>
+    <div>
+        <strong>Country:</strong> @Model.Address?.Country
+    </div>
+    <h4>Funds</h4>
+    <div>
+        <strong>Total Funds:</strong> @Model.TotalFunds.ToString("C")
+    </div>
+    <form asp-action="AddFund" method="post">
+        <div class="mb-3">
+            <label for="fundAmount" class="form-label">Add Funds</label>
+            <input type="number" step="0.01" class="form-control" id="fundAmount" name="amount" required />
+        </div>
+        <button type="submit" class="btn btn-primary">Add Funds</button>
+    </form>
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success mt-3">@TempData["SuccessMessage"]</div>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger mt-3">@TempData["ErrorMessage"]</div>
+    }
+    <a href="/Customers/Edit" class="btn btn-primary">Edit Profile</a>
+    <a href="/Customers/OrderHistory" class="btn btn-secondary">Order History</a>
+</div>

@@ -1,0 +1,22 @@
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="container mt-5 p-4 bg-light rounded shadow">
+    <div class="text-center">
+        <h1 class="display-4 text-primary">Welcome to the Staff Dashboard</h1>
+        <p class="lead text-secondary">Manage customers, tasks, and more with ease.</p>
+        <hr class="my-4">
+    </div>
+
+    <div class="mt-4">
+        <p class="h5 text-dark">What would you like to do today?</p>
+        <div class="list-group">
+            <a asp-action="Customers"
+                class="list-group-item list-group-item-action list-group-item-primary d-flex align-items-center">
+                <i class="bi bi-people-fill me-2"></i> View Customers
+            </a>
+            <!-- Add more actions as needed -->
+        </div>
+    </div>
+</div>
