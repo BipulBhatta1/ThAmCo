@@ -1,6 +1,3 @@
-# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# More GitHub Actions for Azure: https://github.com/Azure/actions
-
 name: Build and deploy ASP.Net Core app to Azure Web App - ThAmCoProductsApp
 
 on:
@@ -14,19 +11,26 @@ jobs:
     runs-on: windows-latest
 
     steps:
+      # Checkout the repository
       - uses: actions/checkout@v4
 
+      # Set up .NET Core SDK
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.x'
 
-      - name: Build with dotnet
+      # Navigate to ThAmCo.Products and Build
+      - name: Build ThAmCo.Products
+        working-directory: ./ThAmCo.Products
         run: dotnet build --configuration Release
 
-      - name: dotnet publish
-        run: dotnet publish -c Release -o "${{env.DOTNET_ROOT}}/myapp"
+      # Publish the ThAmCo.Products project
+      - name: Publish ThAmCo.Products
+        working-directory: ./ThAmCo.Products
+        run: dotnet publish --configuration Release -o "${{env.DOTNET_ROOT}}/myapp"
 
+      # Upload artifact for deployment
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
@@ -40,21 +44,24 @@ jobs:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
-      id-token: write #This is required for requesting the JWT
+      id-token: write # Required for requesting the JWT
 
     steps:
+      # Download artifact from build job
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
           name: .net-app
       
+      # Login to Azure
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_AF04C65FD1B1492EBD84D2CF69B678E9 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_1FB3CCB51B994019BBF9F2F971FD4AED }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_9F36BBFA1B674DC7BC8B65C6152A35D8 }}
+          client-id: ${{ secrets.__clientidsecretname__ }}
+          tenant-id: ${{ secrets.__tenantidsecretname__ }}
+          subscription-id: ${{ secrets.__subscriptionidsecretname__ }}
 
+      # Deploy to Azure Web App
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
@@ -62,4 +69,5 @@ jobs:
           app-name: 'ThAmCoProductsApp'
           slot-name: 'Production'
           package: .
+
           
